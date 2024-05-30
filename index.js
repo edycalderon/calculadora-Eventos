@@ -19,8 +19,8 @@ let barra = document.querySelector('#barra-number')
 let signo = ''
 let primerValor = 0
 let segundoValor = 0
-let numerosGuardados = 8
-let clave = 0
+let acumulador = 0
+
 
 
 
@@ -39,13 +39,9 @@ mas.addEventListener('click', () => {
     primerValor = barra.value
     console.log(primerValor)
     signo = '+'
-    sumita = parseInt(primerValor) + (numerosGuardados)
-    console.log(sumita)
-    barra.value += sumita
-    console.log(typeof sudo);
-    barra.value = ""
-    
-    
+    acumulador = acumulador + parseInt(primerValor)
+    console.log(acumulador)
+    barra.value = "" 
 })
 cuatro.addEventListener('click', () => {
     barra.value += cuatro.value
@@ -95,12 +91,13 @@ limpiar.addEventListener('click', () => {
 })
 
 igual.addEventListener('click', () => {
+    
 
     if (signo === '+') {
         segundoValor = barra.value
         barra.value = ""
         console.log(segundoValor)
-        sumado = parseInt(primerValor) + parseInt(segundoValor)
+        sumado = acumulador + parseInt(segundoValor) 
         console.log(sumado)
         barra.value += sumado
     }
@@ -128,6 +125,7 @@ igual.addEventListener('click', () => {
         console.log(sumado)
         barra.value += sumado
     }
+    acumulador = 0
 })
 
 
