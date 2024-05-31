@@ -12,14 +12,9 @@
     border: solid 5px white ;
     
 }
-.sombra-border{
-    color: white !important;
-}
 
-.shadow{
-    border: solid 5px red;
-    box-shadow: 0px 5px 15px rgb(182, 52, 52);
-}
+
+
 
 .fondoCalculadora{
     background-image: url(./fondoDeCalculadora.jpg);

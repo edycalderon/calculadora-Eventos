@@ -1,132 +1,126 @@
-let uno = document.querySelector('#uno')
-let dos = document.querySelector('#dos')
-let tres = document.querySelector('#tres')
-let mas = document.querySelector('#mas')
-let cuatro = document.querySelector('#cuatro')
-let sinco = document.querySelector('#sinco')
-let seis = document.querySelector('#seis')
-let por = document.querySelector('#por')
-let siete = document.querySelector('#siete')
-let ocho = document.querySelector('#ocho')
-let nueve = document.querySelector('#nueve')
-let divicion = document.querySelector('#divicion')
-let cero = document.querySelector('#cero')
-let limpiar = document.querySelector('#limpiar')
-let menos = document.querySelector('#menos')
-let igual = document.querySelector('#igual')
-let barra = document.querySelector('#barra-number')
-
-let signo = ''
-let primerValor = 0
-let segundoValor = 0
+let numeros = document.querySelectorAll('.numer');
+let texto = document.querySelector('#barra-number');
+let btnAccion = document.querySelectorAll('.accion');
+let primerNumero = 0
+let segundoNumero = 0
+let signo = ""
 let acumulador = 0
+let sumaFija = 0
+let acumuladorMultiplicar = 1
+let acumuladorResta = 0
+let pasoIf = 0
+let pasoDivicion = 0
+let valorDivicionFijo = 0
+let valorRestaFijo = 0
 
 
-
-
-
-uno.addEventListener('click', () => {
-    barra.value += parseInt(uno.value)
-})
-dos.addEventListener('click', () => {
-
-    barra.value += parseInt(dos.value)
-})
-tres.addEventListener('click', () => {
-    barra.value += tres.value
-})
-mas.addEventListener('click', () => {
-    primerValor = barra.value
-    console.log(primerValor)
-    signo = '+'
-    acumulador = acumulador + parseInt(primerValor)
-    console.log(acumulador)
-    barra.value = "" 
-})
-cuatro.addEventListener('click', () => {
-    barra.value += cuatro.value
-})
-sinco.addEventListener('click', () => {
-    barra.value += sinco.value
-})
-seis.addEventListener('click', () => {
-    barra.value += seis.value
-})
-por.addEventListener('click', () => {
-    primerValor = barra.value
-    barra.value = ""
-    signo = '*'
-})
-siete.addEventListener('click', () => {
-    barra.value += siete.value
-})
-ocho.addEventListener('click', () => {
-    barra.value += ocho.value
-})
-nueve.addEventListener('click', () => {
-    barra.value += nueve.value
-})
-divicion.addEventListener('click', () => {
-    primerValor = barra.value
-    barra.value = ""
-    signo = '/'
-})
-cero.addEventListener('click', () => {
-    barra.value += cero.value
-})
-limpiar.addEventListener('click', () => {
-    barra.value += limpiar.value
-})
-menos.addEventListener('click', () => {
-    primerValor = barra.value
-    barra.value = ""
-    signo = '-'
-})
-igual.addEventListener('click', () => {
-    barra.value += igual.value
-})
-
-limpiar.addEventListener('click', () => {
-    barra.value = ""
-})
-
-igual.addEventListener('click', () => {
-    
-
-    if (signo === '+') {
-        segundoValor = barra.value
-        barra.value = ""
-        console.log(segundoValor)
-        sumado = acumulador + parseInt(segundoValor) 
-        console.log(sumado)
-        barra.value += sumado
-    }
-    else if (signo == '-') {
-        segundoValor = barra.value
-        barra.value = ""
-        console.log(segundoValor)
-        sumado = parseInt(primerValor) - parseInt(segundoValor)
-        console.log(sumado)
-        barra.value += sumado
-    }
-    else if (signo === '*') {
-        segundoValor = barra.value
-        barra.value = ""
-        console.log(segundoValor)
-        sumado = parseInt(primerValor) * parseInt(segundoValor)
-        console.log(sumado)
-        barra.value += sumado
-    }
-    else if (signo === '/') {
-        segundoValor = barra.value
-        barra.value = ""
-        console.log(segundoValor)
-        sumado = parseInt(primerValor) / parseInt(segundoValor)
-        console.log(sumado)
-        barra.value += sumado
-    }
-    acumulador = 0
+numeros.forEach((btn) => {
+    btn.addEventListener('click', () => {
+        texto.value += btn.value
+    })
 })
 
 
+btnAccion.forEach((btn) => {
+    btn.addEventListener('click', (e) => {
+        if (e.target.value == "+" || e.target.value == '-'
+            || e.target.value == '*' || e.target.value == '/'
+            || e.target.value == 'clear') {
+            primerNumero = parseInt(texto.value)
+            console.log(primerNumero)
+            
 
+            // if(e.target.value == "+"){
+            //     if (acumulador == 0){
+            //         sumaFija = parseInt(primerNumero)
+            //         texto.value = ""
+            //         acumulador ++  
+
+            //     }
+            //     else if (acumulador > 0){
+            //         sumaFija = sumaFija + primerNumero
+            //         texto.value=''
+            //         primerNumero=sumaFija
+            //     }
+            // }
+
+            if(e.target.value == "+" ){
+                acumulador = acumulador + primerNumero
+                console.log(acumulador)
+                texto.value=""
+            }
+
+            if(e.target.value == "*"){
+                acumuladorMultiplicar = acumuladorMultiplicar * parseInt(primerNumero)
+                console.log(acumuladorMultiplicar)
+            }
+
+            
+            if(e.target.value == "/"){
+                if (pasoDivicion == 0){
+                    valorDivicionFijo = parseInt(primerNumero)
+                    pasoDivicion ++  
+                }
+                else if (pasoDivicion > 0){
+                    primerNumero = parseInt(texto.value)
+                    valorDivicionFijo = valorDivicionFijo / primerNumero
+                    texto.value=''
+                    primerNumero=valorDivicionFijo
+
+
+                }
+            }
+
+
+            if(e.target.value == "-"){
+                if (pasoIf == 0){
+                    valorRestaFijo = parseInt(primerNumero)
+                    pasoIf ++  
+                }
+                else if (pasoIf > 0){
+                    primerNumero = parseInt(texto.value)
+                    valorRestaFijo = valorRestaFijo - primerNumero
+                    texto.value=''
+                    primerNumero=valorRestaFijo
+                }
+            }
+                texto.value = ""
+                signo = e.target.value
+
+        } else if (e.target.value == '=') {
+            if (signo == '+') {
+                segundoNumero = parseInt(texto.value)
+                let resultado = sumaFija + segundoNumero;
+                texto.value = resultado
+            }
+            else if (signo == '-') {
+                segundoNumero = parseInt(texto.value)
+                let resultado = primerNumero - segundoNumero;
+                texto.value = resultado
+                
+            }
+            else if (signo == '*') {
+                segundoNumero = parseInt(texto.value)
+                let resultado = acumuladorMultiplicar * segundoNumero
+                texto.value = resultado
+            }
+            else if (signo == "/") {
+                segundoNumero = parseInt(texto.value)
+                let resultado = parseInt(primerNumero) / segundoNumero
+                texto.value = resultado
+            }
+            else if (signo == "clear") {
+                texto.value = " "
+            }
+            acumulador = 0
+
+            acumuladorMultiplicar = 1
+        } else if (e.target.value == 'clear') {
+            texto.value = ""
+        }
+
+    })
+
+
+
+})
