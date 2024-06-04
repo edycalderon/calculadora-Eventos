@@ -1,18 +1,12 @@
 let numeros = document.querySelectorAll('.numer');
 let texto = document.querySelector('#barra-number');
 let btnAccion = document.querySelectorAll('.accion');
+const limpiar = document.querySelector('.clear')
 let primerNumero = 0
 let segundoNumero = 0
 let signo = ""
 let acumulador = 0
-let sumaFija = 0
-let acumuladorMultiplicar = 1
-let acumuladorResta = 0
-let pasoIf = 0
-let pasoDivicion = 0
-let valorDivicionFijo = 0
-let valorRestaFijo = 0
-
+let primeraVez = true 
 
 numeros.forEach((btn) => {
     btn.addEventListener('click', () => {
@@ -20,107 +14,132 @@ numeros.forEach((btn) => {
     })
 })
 
+            const suma = () => {
+                acumulador = acumulador + primerNumero
+            }
+
+            const resta = () =>{
+                if (primeraVez){
+                    acumulador = primerNumero - Math.abs(acumulador)
+                    primeraVez = false;
+
+                }
+                else if (acumulador >= 0){
+                    acumulador = Math.abs(acumulador) - primerNumero
+                }
+                else  {
+                    acumulador = acumulador - primerNumero
+                }
+            }
+
+            const multiplicar  = () =>{
+                if (acumulador == 0)
+                {
+                    acumulador = 1
+                    acumulador = acumulador * primerNumero
+                }
+                else{
+                    acumulador = acumulador * primerNumero
+                }
+            }            
+            const divicion = () => {
+                if (acumulador == 0)
+                {
+                    acumulador = primerNumero
+                }
+                else{
+                    acumulador = acumulador / primerNumero
+                }
+            }
+            const igual = () => {
+                if (signo == '+' ){
+                    segundoNumero = parseInt(texto.value)
+                    acumulador = acumulador + segundoNumero
+                    texto.value = acumulador
+                }
+                else if (signo == '-'){
+                    segundoNumero = parseInt(texto.value)
+                    acumulador = acumulador - segundoNumero
+                    texto.value = acumulador
+                    primeraVez = true
+                }
+                else if (signo == '*'){
+                    segundoNumero = parseInt(texto.value)
+                    acumulador = acumulador * segundoNumero
+                    primeraVez = true
+                    texto.value = acumulador
+                }
+                else if (signo == '/'){
+                    segundoNumero = parseInt(texto.value)
+                    acumulador = acumulador / segundoNumero
+                    texto.value = acumulador
+                }
+            }
+            
 
 btnAccion.forEach((btn) => {
     btn.addEventListener('click', (e) => {
-        if (e.target.value == "+" || e.target.value == '-'
-            || e.target.value == '*' || e.target.value == '/'
-            || e.target.value == 'clear') {
+        console.log(e)
+        if (texto.value == "")
+        {
+            alert('ingrese un numero')
+        }
+        else if (e.target.value != '=' )
+        {
             primerNumero = parseInt(texto.value)
-            console.log(primerNumero)
-            
-
-            // if(e.target.value == "+"){
-            //     if (acumulador == 0){
-            //         sumaFija = parseInt(primerNumero)
-            //         texto.value = ""
-            //         acumulador ++  
-
-            //     }
-            //     else if (acumulador > 0){
-            //         sumaFija = sumaFija + primerNumero
-            //         texto.value=''
-            //         primerNumero=sumaFija
-            //     }
-            // }
-
-            if(e.target.value == "+" ){
-                acumulador = acumulador + primerNumero
-                console.log(acumulador)
-                texto.value=""
-            }
-
-            if(e.target.value == "*"){
-                acumuladorMultiplicar = acumuladorMultiplicar * parseInt(primerNumero)
-                console.log(acumuladorMultiplicar)
-            }
-
-            
-            if(e.target.value == "/"){
-                if (pasoDivicion == 0){
-                    valorDivicionFijo = parseInt(primerNumero)
-                    pasoDivicion ++  
+            switch (e.target.value)
+            {
+                case '+' : 
+                if (signo != '')
+                {
+                    igual();
+                }else{
+                    suma();
                 }
-                else if (pasoDivicion > 0){
-                    primerNumero = parseInt(texto.value)
-                    valorDivicionFijo = valorDivicionFijo / primerNumero
-                    texto.value=''
-                    primerNumero=valorDivicionFijo
-
-
+                break;
+                case '-' : 
+                if (signo != '')
+                {
+                    igual();
+                }else{
+                    resta();
                 }
-            }
-
-
-            if(e.target.value == "-"){
-                if (pasoIf == 0){
-                    valorRestaFijo = parseInt(primerNumero)
-                    pasoIf ++  
+                break;
+                case '*' : 
+                if (signo != '')
+                {
+                    igual();
+                }else{
+                    multiplicar();
                 }
-                else if (pasoIf > 0){
-                    primerNumero = parseInt(texto.value)
-                    valorRestaFijo = valorRestaFijo - primerNumero
-                    texto.value=''
-                    primerNumero=valorRestaFijo
+                break;
+                case '/' : 
+                if (signo != '')
+                {
+                    igual();
+                }else{
+                    divicion();
                 }
-            }
-                texto.value = ""
-                signo = e.target.value
-
-        } else if (e.target.value == '=') {
-            if (signo == '+') {
-                segundoNumero = parseInt(texto.value)
-                let resultado = sumaFija + segundoNumero;
-                texto.value = resultado
-            }
-            else if (signo == '-') {
-                segundoNumero = parseInt(texto.value)
-                let resultado = primerNumero - segundoNumero;
-                texto.value = resultado
+                break;
+                
                 
             }
-            else if (signo == '*') {
-                segundoNumero = parseInt(texto.value)
-                let resultado = acumuladorMultiplicar * segundoNumero
-                texto.value = resultado
-            }
-            else if (signo == "/") {
-                segundoNumero = parseInt(texto.value)
-                let resultado = parseInt(primerNumero) / segundoNumero
-                texto.value = resultado
-            }
-            else if (signo == "clear") {
-                texto.value = " "
-            }
-            acumulador = 0
-
-            acumuladorMultiplicar = 1
-        } else if (e.target.value == 'clear') {
             texto.value = ""
+            signo = e.target.value
+            
+        }else{
+            igual ()
+            acumulador = 0
+            signo = ''
         }
-
     })
+})
 
-
-
+limpiar.addEventListener('click', () => {
+    primerNumero = 0;
+    segundoNumero = 0;
+    signo = ''
+    texto.value = ''
+    acumulador = 0;
+    primeraVez = true
 })
